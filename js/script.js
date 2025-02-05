@@ -6,6 +6,8 @@ function addToCart(product){
 
     // øger quantity med 1 hver gang
     document.getElementById(product).value = quantity + 1;
+    //opdater den totalPrisen for alle vare
+    totalPrice();
 }
 
 function removeFromCart(product){
@@ -14,12 +16,17 @@ function removeFromCart(product){
     if(quantity > 0){
          // formindsk quantity med 1 hver gang
     document.getElementById(product).value = quantity -1;
+    updateTotalPrice(product)
     }
+
 }
 
 function resetCart(product){
 // sætte quantity til 0 hver gang
 document.getElementById(product).value = 0;
+
+updateTotalPrice(product);
+
 }
 
 
@@ -33,15 +40,25 @@ function updateTotalPrice(product){
      const total = quantity * price; 
 
      document.getElementById(product +"-total").value = total;
+    //opdater den totalPrisen for alle vare
+     totalPrice();
 }
 
 //function til at beregne og opdatere den samlede total pris for alle varer i kurven
 function totalPrice(){
     //variable til at holde styr på den samlede totalpris
     let totalSum = 0;
-    // finder alle imput felter der indeholder et id med "product" efterfulgt af "-total"
+    // finder alle imput felter der indeholder et id med "product" efterfulgt af "-total" - lige meget hvad der står foran
     const productElements = document.querySelectorAll("[id$=-total]")
+    //lopper gennem hvert produkt-element (coffee, espresso, americano) og ligger værdierne sammen  
+    productElements.forEach(element =>{
+        totalSum += parseInt(productElements.value);
+    });
+
+    document.getElementById(`totalSum`).value = totalSum;
 }
+
+
 
 
 
